@@ -63,4 +63,4 @@ When the cron job runs, it fetches the data from the specified Google Sheets doc
    flyctl secrets set GOOGLE_CLIENT_OPTIONS=<base64-encoded-google-auth-json>
    ```
 
-   Replace <spreadsheet-id>, <giphy-api-key>, and <slack-channel-url> with the appropriate values. These secrets correspond to the environment variables used in the application.
+   Replace <spreadsheet-id>, <giphy-api-key>, <slack-channel-url> and <base64-encoded-google-auth-json> with the appropriate values. These secrets correspond to the environment variables used in the application.

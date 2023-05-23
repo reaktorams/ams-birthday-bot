@@ -4,7 +4,7 @@ import axios from "axios";
 export async function getSheetData() {
   console.log("Fetch data from google sheets");
   const authorization = new auth.GoogleAuth({
-    clientOptions: JSON.parse(
+    credentials: JSON.parse(
       Buffer.from(process.env.GOOGLE_CLIENT_OPTIONS, "base64").toString(
         "binary"
       )

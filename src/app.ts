@@ -8,7 +8,7 @@ const app = express();
 const port = 8080;
 
 // Check birthday list everyday at 08:00 and send slack notification if something is found
-Cron("0 8 * * *", { timezone: "Europe/Amsterdam" }, async function () {
+Cron("* 8 * * *", { timezone: "Europe/Amsterdam" }, async function () {
   console.log("Checking birthdays list");
   const sheetData = await getSheetData();
   if (sheetData.length === 0) {
