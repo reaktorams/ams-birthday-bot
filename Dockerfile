@@ -1,21 +1,39 @@
-FROM node:16.17.1-alpine as builder
+# syntax = docker/dockerfile:1
 
-WORKDIR /tmp
-COPY . ./
-RUN rm -rf ./dist
-RUN npm install && npm run build
+# Adjust BUN_VERSION as desired
+ARG BUN_VERSION=1.0.0
+FROM oven/bun:${BUN_VERSION} as base
 
-FROM node:16.17.1-alpine
+LABEL fly_launch_runtime="Bun"
 
-ENV NODE_ENV production
-
-RUN mkdir /app
+# Bun app lives here
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install
-COPY --from=builder /tmp/dist ./dist
 
-LABEL fly_launch_runtime="nodejs"
+# Set production environment
+ENV NODE_ENV="production"
 
-CMD [ "npm", "run", "start" ]
+
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build node modules
+RUN apt-get update -qq && \
+    apt-get install -y build-essential pkg-config python
+
+# Install node modules
+COPY --link bun.lockb package-lock.json package.json ./
+RUN bun install --ci
+
+# Copy application code
+COPY --link . .
+
+
+# Final stage for app image
+FROM base
+
+# Copy built application
+COPY --from=build /app /app
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD [ "bun", "run", "start" ]

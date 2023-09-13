@@ -1,6 +1,6 @@
-# NodeJS Birthday Reminder App
+# Bun Birthday Reminder App
 
-This NodeJS application is a birthday reminder that checks [a Google Sheets document](https://docs.google.com/spreadsheets/d/1adG43W9XnsAoTlPLgJ2Hi04xi9q4FhunddWeCDwz1W8/edit#gid=0) for birthdays and sends a Slack notification with a birthday message and a random GIF to the designated Slack channel.
+This Bun application is a birthday reminder that checks [a Google Sheets document](https://docs.google.com/spreadsheets/d/1adG43W9XnsAoTlPLgJ2Hi04xi9q4FhunddWeCDwz1W8/edit#gid=0) for birthdays and sends a Slack notification with a birthday message and a random GIF to the designated Slack channel.
 
 ## Installation
 
@@ -14,7 +14,7 @@ This NodeJS application is a birthday reminder that checks [a Google Sheets docu
 
    ```bash
    cd birthday-reminder-app
-   npm install
+   bun i
    ```
 
 3. Set up the environment variables:
@@ -29,12 +29,12 @@ This NodeJS application is a birthday reminder that checks [a Google Sheets docu
 4. Start the application:
 
    ```bash
-   npm start
+   bun run start
    ```
 
 ## Usage
 
-The application runs as a NodeJS server and uses the Express framework. It also includes a scheduled cron job that executes every day at 08:00 (timezone: Europe/Amsterdam) to check the birthday list.
+The application runs as a Bun server. It also includes a scheduled cron job that executes every day at 08:00 (timezone: Europe/Amsterdam) to check the birthday list.
 
 When the cron job runs, it fetches the data from the specified Google Sheets document and compares the current date with the birthdates in the sheet. If a match is found, it retrieves a random GIF related to birthdays and posts a birthday message to the Slack channel specified in the environment variables.
 
@@ -42,19 +42,13 @@ When the cron job runs, it fetches the data from the specified Google Sheets doc
 
 1. Install the Fly.io command-line tool (CLI) by following the instructions provided in the Fly.io documentation. (`brew install flyctl`)
 
-2. Build the application for production:
-
-   ```bash
-   npm run build
-   ```
-
-3. Deploy the application:
+2. Deploy the application:
 
    ```bash
    flyctl deploy
    ```
 
-4. To update or add any environment variables:
+3. To update or add any environment variables:
 
    ```bash
    flyctl secrets set SPREADSHEET_ID=<spreadsheet-id>

@@ -1,11 +1,5 @@
-import dotevn from "dotenv";
-dotevn.config();
-
-import express from "express";
 import { Cron } from "croner";
 import { getGiphyData, getSheetData, postMessageToSlack } from "./utilities";
-const app = express();
-const port = 8080;
 
 // Check birthday list everyday at 08:00 and send slack notification if something is found
 Cron("0 8 * * *", { timezone: "Europe/Amsterdam" }, async function () {
@@ -32,6 +26,10 @@ Cron("0 8 * * *", { timezone: "Europe/Amsterdam" }, async function () {
   }
 });
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+const server = Bun.serve({
+  port: 3000,
+  fetch() {
+    return new Response(`Ams Birthday Bot is running!!`);
+  },
 });
+console.log(`App is running at http://localhost:${server.port}`);

@@ -5,9 +5,7 @@ export async function getSheetData() {
   console.log("Fetch data from google sheets");
   const authorization = new auth.GoogleAuth({
     credentials: JSON.parse(
-      Buffer.from(process.env.GOOGLE_CLIENT_OPTIONS, "base64").toString(
-        "binary"
-      )
+      Buffer.from(Bun.env.GOOGLE_CLIENT_OPTIONS, "base64").toString("binary"),
     ),
     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
   });
@@ -18,7 +16,7 @@ export async function getSheetData() {
   }).spreadsheets;
 
   const sheetData = await spreadsheets.values.get({
-    spreadsheetId: process.env.SPREADSHEET_ID,
+    spreadsheetId: Bun.env.SPREADSHEET_ID,
     range: "AMS!A:B",
   });
 
@@ -28,7 +26,7 @@ export async function getSheetData() {
 export async function getGiphyData() {
   console.log("Fetch GIF to display in message");
   const giphyOptions = {
-    api_key: process.env.GIPHY_API_KEY,
+    api_key: Bun.env.GIPHY_API_KEY,
     tag: "Happy Birthday",
     rating: "g",
   };
@@ -36,7 +34,7 @@ export async function getGiphyData() {
   const {
     data: { data: giphyData },
   } = await axios.get(
-    `https://api.giphy.com/v1/gifs/random?api_key=${giphyOptions.api_key}&tag=${giphyOptions.tag}&rating=${giphyOptions.rating}`
+    `https://api.giphy.com/v1/gifs/random?api_key=${giphyOptions.api_key}&tag=${giphyOptions.tag}&rating=${giphyOptions.rating}`,
   );
 
   return {
@@ -49,7 +47,7 @@ export async function postMessageToSlack(
   name: string,
   gif: string,
   title: string,
-  birthdate?: string
+  birthdate?: string,
 ) {
   console.log("Post to slack channel");
   await axios.post(
@@ -73,6 +71,6 @@ export async function postMessageToSlack(
         },
       ],
     },
-    { headers: { "Content-type": "application/json" } }
+    { headers: { "Content-type": "application/json" } },
   );
 }
