@@ -5,7 +5,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "types": ["bun-types"] // this is necessary
+    "outDir": "dist"
   },
   "lib": ["es2015"]
 }
