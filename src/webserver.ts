@@ -19,6 +19,8 @@ export const startWebServer = () => {
     })
   );
 
+  app.use(express.json());
+
   app.post(
     "/trigger",
     asyncRoute(async (req, res) => {

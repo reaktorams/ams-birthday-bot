@@ -25,6 +25,7 @@ This NodeJS application is a birthday reminder that checks [a Google Sheets docu
    - `GIPHY_API_KEY`: Your GIPHY API key.
    - `SLACK_CHANNEL_URL`: The webhook URL for your Slack channel.
    - `GOOGLE_CLIENT_OPTIONS`: The base64 encoded Google service account JSON data to authenticate with.
+   - `TRIGGER_TOKEN`: A token that enables a manual birthday greeting via a REST API.
 
 4. Start the application:
 

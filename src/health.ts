@@ -4,7 +4,7 @@ import { getSheetData } from "./sheets";
 const isSheetsHealthy = async () => {
   try {
     const sheetData = await getSheetData();
-    return sheetData.length > 1;
+    return sheetData.length > 0;
   } catch (_) {
     return false;
   }
