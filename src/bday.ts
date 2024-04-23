@@ -2,8 +2,21 @@ import { getGiphyData } from "./giphy";
 import { logger } from "./logger";
 import { getSheetData } from "./sheets";
 import { postMessageToSlack } from "./slack";
+import { DateObject, areDatesEqual, getToday, isToday, toDate } from "./date";
 
-export const sendBirthdayWish = async () => {
+type Options = {
+  date?: DateObject;
+};
+
+const createMessage = (name: string, date: DateObject) => {
+  if (isToday(date)) {
+    return `A very happy birthday to ${name} :partydancer:`;
+  }
+
+  return `A very happy (belated 🙈) birthday to ${name} (${date.day}/${date.month}) :partydancer:`;
+};
+
+export const sendBirthdayWish = async ({ date = getToday() }: Options = {}) => {
   logger.info("Checking birthdays list");
 
   const sheetData = await getSheetData();
@@ -12,18 +25,16 @@ export const sendBirthdayWish = async () => {
     return;
   }
 
-  const today = new Date();
-  const currentDay = today.getDate();
-  const currentMonth = today.getMonth() + 1;
   let birthdayCounter = 0;
 
   logger.info("Check if someones has a birthday today");
   for (const row of sheetData) {
-    const [day, month] = row[1].split("/");
-    if (+day === currentDay && +month === currentMonth) {
+    const sheetDate = toDate(row[1]);
+    if (areDatesEqual(sheetDate, date)) {
       birthdayCounter++;
       const { title, gif } = await getGiphyData();
-      await postMessageToSlack(row[0], gif, title);
+      const message = createMessage(row[0], date);
+      await postMessageToSlack(message, gif, title);
     }
   }
   logger.info(`Found ${birthdayCounter} birthday(s)`);

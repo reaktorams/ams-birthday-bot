@@ -3,10 +3,9 @@ import { logger } from "./logger";
 import { config } from "./config";
 
 export const postMessageToSlack = async (
-  name: string,
+  message: string,
   gif: string,
-  title: string,
-  birthdate?: string
+  title: string
 ) => {
   logger.info("Post to slack channel");
 
@@ -18,9 +17,7 @@ export const postMessageToSlack = async (
           type: "section",
           text: {
             type: "mrkdwn",
-            text: `A very happy birthday to ${name} ${
-              birthdate ? `(on ${birthdate})` : ""
-            } :partydancer:`,
+            text: message,
           },
         },
         {

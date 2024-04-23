@@ -3,6 +3,7 @@ import { logger } from "./logger";
 import { sendBirthdayWish } from "./bday";
 import { getHealthStatus } from "./health";
 import { config } from "./config";
+import { toDate } from "./date";
 
 const app = express();
 const port = 8080;
@@ -28,7 +29,8 @@ export const startWebServer = () => {
         return res.sendStatus(401);
       }
 
-      await sendBirthdayWish();
+      const date = req.body.date ? toDate(req.body.date) : undefined;
+      await sendBirthdayWish({ date });
       res.sendStatus(200);
     })
   );
