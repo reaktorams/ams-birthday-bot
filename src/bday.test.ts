@@ -23,6 +23,7 @@ beforeEach(() => {
 test("sendBirthdayWish without parameter", async () => {
   const today = getToday();
   mocked(getSheetData).mockResolvedValue([
+    ["Name", "Birthday"],
     ["John Doe", "14/01"],
     ["Jane Doe", `${today.day}/${today.month}`],
   ]);
@@ -41,6 +42,7 @@ test("sendBirthdayWish with parameter", async () => {
   tomorrow.day++;
 
   mocked(getSheetData).mockResolvedValue([
+    ["Name", "Birthday"],
     ["John Doe", "14/01"],
     ["Jane Doe", `${tomorrow.day}/${tomorrow.month}`],
   ]);

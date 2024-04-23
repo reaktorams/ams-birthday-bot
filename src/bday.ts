@@ -19,7 +19,7 @@ const createMessage = (name: string, date: DateObject) => {
 export const sendBirthdayWish = async ({ date = getToday() }: Options = {}) => {
   logger.info("Checking birthdays list");
 
-  const sheetData = await getSheetData();
+  const [_header, ...sheetData] = await getSheetData();
   if (sheetData.length === 0) {
     logger.info("No data found.");
     return;
