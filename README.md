@@ -39,6 +39,10 @@ The application runs as a NodeJS server and uses the Express framework. It also 
 
 When the cron job runs, it fetches the data from the specified Google Sheets document and compares the current date with the birthdates in the sheet. If a match is found, it retrieves a random GIF related to birthdays and posts a birthday message to the Slack channel specified in the environment variables.
 
+### Manual trigger
+
+If a birthday was missed for some reason, it is possible to trigger the bot via the `POST /trigger` endpoint. You need to supply the `triggerToken` (authorization reason) and an optional `date` with a format `31/12` in the `body` JSON. If no date is supplied, it'll try to trigger today's birthday (if any).
+
 ## Deployment on Fly.io
 
 1. Install the Fly.io command-line tool (CLI) by following the instructions provided in the Fly.io documentation. (`brew install flyctl`)
