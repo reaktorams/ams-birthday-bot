@@ -1,13 +1,13 @@
-import axios from "axios";
-import { logger } from "./logger";
-import { config } from "./config";
+import axios from "axios"
+import { logger } from "./logger"
+import { config } from "./config"
 
 export const postMessageToSlack = async (
   message: string,
   gif: string,
-  title: string
+  title: string,
 ) => {
-  logger.info("Post to slack channel");
+  logger.info("Post to slack channel")
 
   await axios.post(
     config.slack.channelUrl,
@@ -28,6 +28,6 @@ export const postMessageToSlack = async (
         },
       ],
     },
-    { headers: { "Content-type": "application/json" } }
-  );
-};
+    { headers: { "Content-type": "application/json" } },
+  )
+}

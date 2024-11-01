@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 const getEnvVar = (name: string) => {
-  const value = process.env[name];
+  const value = process.env[name]
   if (value === "") {
-    throw new Error(`Missing required environment variable: ${name}`);
+    throw new Error(`Missing required environment variable: ${name}`)
   }
-  return value;
-};
+  return value
+}
 
 export const config = {
   giphy: {
@@ -16,8 +16,8 @@ export const config = {
   google: {
     credentials: JSON.parse(
       Buffer.from(getEnvVar("GOOGLE_CLIENT_OPTIONS"), "base64").toString(
-        "binary"
-      )
+        "binary",
+      ),
     ),
     spreadsheetId: getEnvVar("SPREADSHEET_ID"),
   },
@@ -25,4 +25,4 @@ export const config = {
     channelUrl: getEnvVar("SLACK_CHANNEL_URL"),
   },
   triggerToken: getEnvVar("TRIGGER_TOKEN"),
-};
+}
